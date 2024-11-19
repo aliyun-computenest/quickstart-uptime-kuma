@@ -2,130 +2,62 @@
 
 ## 概述
 
-`(服务概述内容)`。
 
-```
-eg：
+Uptime Kuma 是一款开源自托管的轻量级监控工具，拥有简洁美观的界面和丰富的告警方式。提供实时的状态监控和通知提醒功能，可监测网站，数据库，Docker容器，Steam游戏服务器等，
+且支持通过 Telegram、Discord、Gotify、Slack、Pushover、Email (SMTP) 等多种服务发送通知消息，以便及时接收网站服务故障通知，帮助用户减少经济损失。非常适合小中型项目的网站和个人网站使用。
+Uptime Kuma具有灵活高效的用户交互界面，用户可以根据需要隐藏或显示监控状态，并且可以使用网页标签功能对不同功能的网站进行分类，以便在特定时段关注高风险站点。此外，Uptime Kuma还提供多种语言支持。
+本文将介绍通过计算巢如何快速安装部署Uptime Kuma。
 
-Demo服务是计算巢提供的示例。
-本文向您介绍如何开通计算巢上的`Demo`服务，以及部署流程和使用说明。
-```
 
 ## 计费说明
 
-`(计费说明内容)`
+Uptime Kuma 在计算巢上的费用主要涉及：
 
-```
-eg:
-
-Demo在计算巢上的费用主要涉及：
-
-- 所选vCPU与内存规格
-- 系统盘类型及容量
-- 公网带宽
-
-计费方式包括：
+所选vCPU与内存规格 磁盘容量 公网带宽 计费方式包括：
 
 - 按量付费（小时）
-- 包年包月
-
-目前提供如下实例：
-
-| 规格族 | vCPU与内存 | 系统盘 | 公网带宽 |
-| --- | --- | --- | --- |
-| ecs.r6.xlarge | 内存型r6，4vCPU 32GiB | ESSD云盘 200GiB PL0 | 固定带宽1Mbps |
+- 包年包月 预估费用在创建实例时可实时看到。
 
 预估费用在创建实例时可实时看到。
-如需更多规格、其他服务（如集群高可用性要求、企业级支持服务等），请联系我们 [mailto:xx@xx.com](mailto:xx@xx.com)。
-
-```
 
 ## 部署架构
 
-`(部署概述内容)`
+Uptime Kuma社区版是单机部署架构, 基于 Docker Compose进行独立部署.
 
 ## RAM账号所需权限
 
-`(权限策略内容)`
+Uptime Kuma服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见为RAM用户授权 。所需权限如下表所示。
 
-```
-eg: 
+| 权限策略名称                          | 备注                         |
+|---------------------------------|----------------------------|
+| AliyunECSFullAccess             | 管理云服务器服务（ECS）的权限           |
+| AliyunVPCFullAccess             | 管理专有网络（VPC）的权限             |
+| AliyunROSFullAccess             | 管理资源编排服务（ROS）的权限           |
+| AliyunComputeNestUserFullAccess | 管理计算巢服务（ComputeNest）的用户侧权限 |
+| AliyunCloudMonitorFullAccess    | 管理云监控（CloudMonitor）的权限     |
 
-Demo服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/document_detail/121945.html)。所需权限如下表所示。
-
-
-| 权限策略名称 | 备注 |
-| --- | --- |
-| AliyunECSFullAccess | 管理云服务器服务（ECS）的权限 |
-
-```
 
 ## 部署流程
 
 ### 部署步骤
-
-`(部署步骤内容)`
-
-```
-eg:
-
-1. 单击部署链接，进入服务实例部署界面，根据界面提示，填写参数完成部署。
-2. 补充示意图。
-```
-### 部署参数说明
-
-`(部署参数说明内容)`
-
-```
-eg:
-
-您在创建服务实例的过程中，需要配置服务实例信息。下文介绍云XR实时渲染平台服务实例输入参数的详细信息。
-
-| 参数组 | 参数项 | 示例 | 说明 |
-| --- | --- | --- | --- |
-| 服务实例名称 |  | test | 实例的名称 |
-| 地域 |  | 华北2（北京） | 选中服务实例的地域，建议就近选中，以获取更好的网络延时。 |
-```
-
+1. 单击[部署链接](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=Uptime Kuma 社区版)，进入服务实例部署界面。
+2. 根据界面提示，填写参数完成部署。
+   选择资源类型并配置ECS实例密码.
+   ![img.png](img.jpg)
+   最后配置可用区，可选择新建VPC，也可使用已有的VPC.
+   ![img_1.png](img1.png)
+3. 设置完参数后，点击下一步确认订单，点击立即创建，等待服务实例创建完成。
+4. 服务实例创建成功后，进入服务实例详情页。在概览页可获取Uptime Kuma的登录信息。
+   ![img_2.png](img_2.png)
 ### 验证结果
 
-`(验证结果内容)`
+点击链接可进入Uptime Kuma的控制台，根据提示创建管理员账户之后即可开始使用。
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
 
-```
-eg:
 
-1. 查看服务实例。服务实例创建成功后，部署时间大约需要2分钟。部署完成后，页面上可以看到对应的服务实例。 
-2. 通过服务实例访问TuGraph。进入到对应的服务实例后，可以在页面上获取到web、rpc、ssh共3种使用方式。
-```
-
-### 使用Demo
-
-`(服务使用说明内容)`
-
-```
-eg:
-
-请访问Demo官网了解如何使用：[使用文档](https://www.aliyun.com)
-```
-
-## 问题排查
-
-`(服务使用说明内容)`
-
-```
-eg:
-
-请访问[Demo的问题排查链接](https://www.aliyun.com)获取帮助。
-```
-
-## 联系我们
-
-欢迎访问Demo官网（[https://www.aliyun.com](https://www.aliyun.com)）了解更多信息。
-
-联系邮箱：[https://www.aliyun.com](mailto:https://www.aliyun.com)
-
-社区版开源地址：[https://github.com/](https://github.com/)
-
-扫码关注微信公众号，技术博客、活动通知不容错过：
-
-`(添加二维码图片)`
+<div style="margin-top: 20px;">
+    <footer>
+        <p>查看更多计算巢服务(https://computenest.aliyun.com)</p>
+    </footer>
+</div>
