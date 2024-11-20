@@ -43,9 +43,9 @@ Uptime Kuma服务需要对ECS、VPC等资源进行访问和创建操作，若您
 1. 单击[部署链接](https://computenest.console.aliyun.com/service/instance/create/default?type=user&ServiceName=Uptime Kuma 社区版)，进入服务实例部署界面。
 2. 根据界面提示，填写参数完成部署。
    选择资源类型并配置ECS实例密码.
-   ![img.png](img.jpg)
+   ![img.png](img.png)
    最后配置可用区，可选择新建VPC，也可使用已有的VPC.
-   ![img_1.png](img1.png)
+   ![img_1.png](img_1.png)
 3. 设置完参数后，点击下一步确认订单，点击立即创建，等待服务实例创建完成。
 4. 服务实例创建成功后，进入服务实例详情页。在概览页可获取Uptime Kuma的登录信息。
    ![img_2.png](img_2.png)
