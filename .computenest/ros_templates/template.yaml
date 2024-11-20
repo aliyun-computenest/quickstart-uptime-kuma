@@ -299,7 +299,7 @@ Resources:
           - RegionId:
               Ref: ALIYUN::Region
 Outputs:
-  uptime-kuma_address:
+  Uptime Kuma 访问页面:
     Description:
       en: uptime-kuma address.
       zh-cn: uptime-kuma 访问页面。
