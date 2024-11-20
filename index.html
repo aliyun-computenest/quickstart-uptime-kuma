@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>Uptime Kuma服务实例部署文档 - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#uptime-kuma">Uptime Kuma服务实例部署文档</a></li>
+              
+                  <li><a href="#_1">概述</a></li>
+                  
+              
+                  <li><a href="#_2">计费说明</a></li>
+                  
+              
+                  <li><a href="#_3">部署架构</a></li>
+                  
+              
+                  <li><a href="#ram">RAM账号所需权限</a></li>
+                  
+              
+                  <li><a href="#_4">部署流程</a></li>
+                  
+                      <li class="li-h3"><a href="#_5">部署步骤</a></li>
+                  
+                      <li class="li-h3"><a href="#_6">验证结果</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="uptime-kuma">Uptime Kuma服务实例部署文档</h1>
+<h2 id="_1">概述</h2>
+<p>Uptime Kuma 是一款开源自托管的轻量级监控工具，拥有简洁美观的界面和丰富的告警方式。提供实时的状态监控和通知提醒功能，可监测网站，数据库，Docker容器，Steam游戏服务器等，
+且支持通过 Telegram、Discord、Gotify、Slack、Pushover、Email (SMTP) 等多种服务发送通知消息，以便及时接收网站服务故障通知，帮助用户减少经济损失。非常适合小中型项目的网站和个人网站使用。
+Uptime Kuma具有灵活高效的用户交互界面，用户可以根据需要隐藏或显示监控状态，并且可以使用网页标签功能对不同功能的网站进行分类，以便在特定时段关注高风险站点。
+本文将介绍通过计算巢如何快速安装部署Uptime Kuma。</p>
+<h2 id="_2">计费说明</h2>
+<p>Uptime Kuma 在计算巢上的费用主要涉及：</p>
+<p>所选vCPU与内存规格 磁盘容量 公网带宽 计费方式包括：</p>
+<ul>
+<li>按量付费（小时）</li>
+<li>包年包月 预估费用在创建实例时可实时看到。</li>
+</ul>
+<p>预估费用在创建实例时可实时看到。</p>
+<h2 id="_3">部署架构</h2>
+<p>Uptime Kuma社区版是单机部署架构, 基于 Docker Compose进行独立部署.</p>
+<h2 id="ram">RAM账号所需权限</h2>
+<p>Uptime Kuma服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见为RAM用户授权 。所需权限如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>权限策略名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AliyunECSFullAccess</td>
+<td>管理云服务器服务（ECS）的权限</td>
+</tr>
+<tr>
+<td>AliyunVPCFullAccess</td>
+<td>管理专有网络（VPC）的权限</td>
+</tr>
+<tr>
+<td>AliyunROSFullAccess</td>
+<td>管理资源编排服务（ROS）的权限</td>
+</tr>
+<tr>
+<td>AliyunComputeNestUserFullAccess</td>
+<td>管理计算巢服务（ComputeNest）的用户侧权限</td>
+</tr>
+<tr>
+<td>AliyunCloudMonitorFullAccess</td>
+<td>管理云监控（CloudMonitor）的权限</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">部署流程</h2>
+<h3 id="_5">部署步骤</h3>
+<ol>
+<li>单击<a href="https://computenest.console.aliyun.com/service/instance/create/default?type=user&amp;ServiceName=Uptime Kuma 社区版">部署链接</a>，进入服务实例部署界面。</li>
+<li>根据界面提示，填写参数完成部署。
+   选择资源类型并配置ECS实例密码.
+   <img alt="img.png" src="img.png" />
+   最后配置可用区，可选择新建VPC，也可使用已有的VPC.
+   <img alt="img_1.png" src="img_1.png" /></li>
+<li>设置完参数后，点击下一步确认订单，点击立即创建，等待服务实例创建完成。</li>
+<li>服务实例创建成功后，进入服务实例详情页。在概览页可获取Uptime Kuma的登录信息。
+   <img alt="img_2.png" src="img_2.png" /></li>
+</ol>
+<h3 id="_6">验证结果</h3>
+<p>点击链接可进入Uptime Kuma的控制台，根据提示创建管理员账户之后即可开始使用。
+<img alt="img_3.png" src="img_3.png" />
+<img alt="img_4.png" src="img_4.png" /></p>
+<div style="margin-top: 20px;">
+    <footer>
+        <p>查看更多计算巢服务(https://computenest.aliyun.com)</p>
+    </footer>
+</div>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.1
+  Docs Build Date UTC : 2024-11-20 05:52:17.894055+00:00
+  -->
+</body>
+</html>
